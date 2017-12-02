@@ -6,6 +6,7 @@ import Prelude hiding (lines)
 import Data.Text (Text, splitOn, lines)
 import Data.Text.Read (decimal)
 import Data.Traversable (sequence, traverse)
+import Data.List (find, sort)
 
 type Parsed = [[Int]]
 
@@ -17,15 +18,12 @@ partOne = sum . fmap (\row -> let maximum = foldr max 0 row
                                 in maximum - foldr min maximum row)
 
 divisibleDivision :: [Int] -> Int
-divisibleDivision vs = head $ do
-    x <- vs
-    y <- vs
-    if x `mod` y == 0 && x /= y
-      then return $ x `div` y
-      else []
+divisibleDivision (v:vs) = let other = find ((==0) . (`mod` v)) vs
+                            in maybe (divisibleDivision vs) (`div` v) other
+divisibleDivision [] = -1
 
 partTwo :: Parsed -> Int
-partTwo = sum . fmap divisibleDivision
+partTwo = sum . fmap (divisibleDivision . sort)
 
 main :: IO ()
 main = forkInteract partOne partTwo
