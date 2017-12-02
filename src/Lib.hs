@@ -24,6 +24,9 @@ aperture n xs = takeLengthOf (drop (n-1) xs) (aperture' n xs)
 class Parseable a where
   parse :: Text -> a
 
+instance Parseable Text where
+  parse = id
+
 forkInteract :: (Parseable a, Show b) => (a -> b) -> (a -> b) -> IO ()
 forkInteract f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 input, "\n\npart 2: ", pack . show $ f2 input, "\n"]) . parse . strip
 

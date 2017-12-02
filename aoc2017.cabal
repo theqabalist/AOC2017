@@ -34,6 +34,16 @@ executable aoc2017.1
                      , aoc2017
   default-language:    Haskell2010
 
+executable aoc2017.2
+  hs-source-dirs:      src
+  main-is:             day2/Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , text
+                     , split
+                     , aoc2017
+  default-language:    Haskell2010
+
 source-repository head
   type:     git
   location: https://github.com/githubuser/aoc2017
