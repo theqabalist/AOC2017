@@ -11,7 +11,7 @@ import Data.List (find, sort)
 type Parsed = [[Int]]
 
 instance Parseable Parsed where
-    parse = unwrap . sequence . fmap (traverse (fmap fst . decimal) . splitOn "\t") . lines
+    parse = unwrap . traverse (traverse (fmap fst . decimal) . splitOn "\t") . lines
 
 partOne :: Parsed -> Int
 partOne = sum . fmap (\row -> let maximum = foldr max 0 row
