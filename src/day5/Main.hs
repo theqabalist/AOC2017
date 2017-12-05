@@ -11,29 +11,20 @@ type Parsed = Vector Int
 instance Parseable Parsed where
     parse = fromList . unwrap . traverse (fmap fst . signed decimal) . lines
 
-travel :: Int -> Int -> Vector Int -> Int
-travel runs idx v = if idx < 0 || idx >= length v then
-                        runs
-                    else
-                        travel (runs + 1) (idx + value) new
-                          where
-                              value = v ! idx
-                              new = v // [(idx, value + 1)]
-
-travel2 :: Int -> Int -> Vector Int -> Int
-travel2 runs idx v = if idx < 0 || idx >= length v then
+travel :: (Int -> Int) -> Int -> Int -> Vector Int -> Int
+travel valAdj runs idx v = if idx < 0 || idx >= length v then
                        runs
                      else
-                       travel2 (runs + 1) (idx + value) new
+                       travel valAdj (runs + 1) (idx + value) new
                          where
                            value = v ! idx
-                           new = v // [(idx, if value >= 3 then value - 1 else value + 1)]
+                           new = v // [(idx, valAdj value)]
 
 partOne :: Parsed -> Int
-partOne = travel 0 0
+partOne = travel (+1) 0 0
 
 partTwo :: Parsed -> Int
-partTwo = travel2 0 0
+partTwo = travel (\v -> if v >= 3 then v - 1 else v + 1) 0 0
 
 main :: IO ()
 main = forkInteract partOne partTwo
