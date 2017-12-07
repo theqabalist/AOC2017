@@ -30,9 +30,6 @@ unsafeMaybe Nothing = error "Too unsafe."
 partOne :: Parsed -> Maybe Text
 partOne ls = findRoot (reverseIndex ls) ((\(seed, _, _) -> seed) $ head ls)
 
-weightMap :: Parsed -> Map Text Int
-weightMap = foldl' (\m (name, weight, _) -> insert name weight m) empty
-
 type Output = Either (Text, Int, Int) (Text, Int)
 
 unsafeLookup v m = unsafeMaybe $ lookup v m
