@@ -2,9 +2,9 @@
 module Main where
 
 import Lib
-import Prelude hiding (lines, read)
-import Data.Vector (fromList, Vector, (//), (!), thaw)
-import Data.Vector.Mutable (modify, MVector, read)
+import Prelude hiding (lines, read, length)
+import Data.Vector.Unboxed (fromList, Vector, (//), (!), thaw, length)
+import Data.Vector.Unboxed.Mutable (modify, MVector, read)
 import Data.Text (lines, Text, pack)
 import Data.Text.Read (decimal, signed)
 import Data.STRef (newSTRef, modifySTRef')
@@ -29,14 +29,17 @@ travel' valAdj v = runST $ do
   loop 0 0
 
 -- immutable ds (first attempt)
-travel :: (Int -> Int) -> Int -> Int -> Vector Int -> Int
-travel valAdj runs idx v = if idx < 0 || idx >= length v then
+travel'' :: (Int -> Int) -> Int -> Int -> Vector Int -> Int
+travel'' valAdj runs idx v = if idx < 0 || idx >= length v then
                              runs
                            else
-                             travel valAdj (runs + 1) (idx + value) new
+                             travel'' valAdj (runs + 1) (idx + value) new
                                where
                                  value = v ! idx
                                  new = v // [(idx, valAdj value)]
+
+travel :: (Int -> Int) -> Vector Int -> Int
+travel valAdj = travel'' valAdj 0 0
 
 partOne :: Parsed -> Int
 partOne = travel' (+1)

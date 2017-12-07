@@ -27,7 +27,7 @@ library
 executable aoc2017.1
   hs-source-dirs:      src
   main-is:             day1/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , split
@@ -37,7 +37,7 @@ executable aoc2017.1
 executable aoc2017.2
   hs-source-dirs:      src
   main-is:             day2/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , split
@@ -47,7 +47,7 @@ executable aoc2017.2
 executable aoc2017.3
   hs-source-dirs:      src
   main-is:             day3/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , containers
@@ -57,7 +57,7 @@ executable aoc2017.3
 executable aoc2017.4
   hs-source-dirs:      src
   main-is:             day4/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , containers
@@ -67,7 +67,7 @@ executable aoc2017.4
 executable aoc2017.5
   hs-source-dirs:      src
   main-is:             day5/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , vector
@@ -78,7 +78,7 @@ executable aoc2017.5
 executable aoc2017.6
   hs-source-dirs:      src
   main-is:             day6/Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
   build-depends:       base
                      , text
                      , vector
