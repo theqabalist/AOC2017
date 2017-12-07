@@ -27,7 +27,7 @@ class Parseable a where
 instance Parseable Text where
   parse = id
 
-forkInteract :: (Parseable a, Show b) => (a -> b) -> (a -> b) -> IO ()
+forkInteract :: (Parseable a, Show b, Show c) => (a -> b) -> (a -> c) -> IO ()
 forkInteract f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 input, "\n\npart 2: ", pack . show $ f2 input, "\n"]) . parse . strip
 
 unwrap :: Show a => Either a b -> b
