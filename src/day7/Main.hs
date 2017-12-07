@@ -35,9 +35,6 @@ weightMap = foldl' (\m (name, weight, _) -> insert name weight m) empty
 
 type Output = Either (Text, Int, Int) (Text, Int)
 
--- something :: Map Text Int -> Parsed -> Output
--- something weights = filter (\(_, _, children) -> not . null $ children) . fmap (\(name, weight, children) -> (name, weight, unsafeMaybe $ traverse (`lookup` weights) children))
-
 unsafeLookup v m = unsafeMaybe $ lookup v m
 
 findOutlier :: [(Text, Int)] -> [[(Text, Int)]]
