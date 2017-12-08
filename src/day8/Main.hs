@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}
+{-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 module Main where
 
 import Lib
@@ -7,7 +7,7 @@ import Data.Text (Text, lines, pack)
 import Data.Maybe (fromMaybe)
 import Day8Parser (parseLine, Op, ConditionalF)
 import Data.Map (Map, empty, insert, lookup, notMember, fromList, toList)
-import Data.List (foldl', partition, sortBy, groupBy)
+import Data.List (foldl', partition, sortBy, groupBy, maximum)
 import Control.Monad.Reader (Reader, runReader)
 import Control.Applicative ((<|>))
 import Data.Ord (comparing)
@@ -27,9 +27,9 @@ compileInstruction ((r, op, v), (gr, cond, gv)) m = let access = fromMaybe 0 (lo
                                                     else m
 
 partOne :: Parsed -> Output
-partOne = foldl' max 0 . fmap snd . toList . foldl' (\x f -> f x) empty . fmap compileInstruction
+partOne = maximum . fmap snd . toList . foldl' (flip ($)) empty . fmap compileInstruction
 
 partTwo :: Parsed -> Output
-partTwo = foldl' max 0 . fmap snd . join . fmap toList . foldl' (\(x:xs) f -> f x:x:xs) [empty] . fmap compileInstruction
+partTwo = maximum . fmap snd . join . fmap toList . foldl' (\(x:xs) f -> f x:x:xs) [empty] . fmap compileInstruction
 
 main = forkInteract partOne partTwo

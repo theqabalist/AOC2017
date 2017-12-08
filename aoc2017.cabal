@@ -28,6 +28,7 @@ executable aoc2017.1
   hs-source-dirs:      src
   main-is:             day1/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , split
@@ -38,6 +39,7 @@ executable aoc2017.2
   hs-source-dirs:      src
   main-is:             day2/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , split
@@ -48,6 +50,7 @@ executable aoc2017.3
   hs-source-dirs:      src
   main-is:             day3/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , containers
@@ -58,6 +61,7 @@ executable aoc2017.4
   hs-source-dirs:      src
   main-is:             day4/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , containers
@@ -68,6 +72,7 @@ executable aoc2017.5
   hs-source-dirs:      src
   main-is:             day5/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , vector
@@ -79,6 +84,7 @@ executable aoc2017.6
   hs-source-dirs:      src
   main-is:             day6/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Lib
   build-depends:       base
                      , text
                      , vector
@@ -91,6 +97,8 @@ executable aoc2017.7
   hs-source-dirs:      src src/day7
   main-is:             day7/Main.hs
   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+  other-modules:       Day7Parser
+                     , Lib
   build-depends:       base
                      , text
                      , vector
@@ -105,6 +113,8 @@ executable aoc2017.8
     hs-source-dirs:      src src/day8
     main-is:             day8/Main.hs
     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+    other-modules:       Day8Parser
+                       , Lib
     build-depends:       base
                        , text
                        , vector
