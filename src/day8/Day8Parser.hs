@@ -8,7 +8,7 @@ module Day8Parser (
 
 import Lib hiding (parse)
 import Data.Functor (($>))
-import Text.Parsec (many1, Parsec, sepBy1, parse, option, try)
+import Text.Parsec (many1, Parsec, parse, option, try)
 import Text.Parsec.Text (Parser)
 import Text.Parsec.Char (digit, char, letter, spaces, string)
 import Data.Text (Text, pack)
