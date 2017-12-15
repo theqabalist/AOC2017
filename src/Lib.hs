@@ -5,7 +5,9 @@ module Lib (
     Parseable(parse),
     forkInteract,
     unwrap,
-    knotHash
+    knotHash,
+    zeroPad,
+    binWord
 ) where
 
 import Data.List (tails)
@@ -21,7 +23,7 @@ import Control.Monad.ST (runST)
 import Data.List.Split (chunksOf)
 import Data.Foldable (foldl')
 import Data.Bits (xor)
-import Numeric (showHex)
+import Numeric (showHex, showIntAtBase)
 
 aperture' :: Int -> [a] -> [[a]]
 aperture' n = map (take n) . tails
@@ -58,15 +60,21 @@ runFlips position skips ls v | null ls = v
                            | otherwise = let len = head ls
                                          in runFlips ((position + skips + len) `mod` length v) (skips + 1) (tail ls) (pancakeFlip position len v)
 
-zeroPad :: String -> String
-zeroPad s | null s = "00"
-          | P.length s == 1 = "0" ++ s
-          | otherwise = s
+zeroPad :: Int -> String -> String
+zeroPad n s | P.length s < n = '0':s
+            | otherwise = s
+
+mapBin :: Int -> Char
+mapBin 0 = '0'
+mapBin 1 = '1'
+
+binWord :: Int -> Int -> String
+binWord n i = zeroPad n $ showIntAtBase 2 mapBin i ""
 
 knotHash :: String -> String
 knotHash input = let instructions = join . replicate 64 . flip (++) [17, 31, 73, 47, 23] . fmap ord $ input
                      jumbled = toList $ runFlips 0 0 instructions (fromList [0..255])
                      chunked = chunksOf 16 jumbled
                      reduced = fmap (\(head:rest) -> foldl' xor head rest) chunked
-                     converted = fmap (zeroPad . (`showHex` "")) reduced
+                     converted = fmap (zeroPad 2 . (`showHex` "")) reduced
                  in foldl' (++) "" converted

@@ -41,17 +41,12 @@ newtype Parsed2 = Parsed2 {getParsed :: [Int]}
 instance Parseable Parsed2 where
     parse = Parsed2 . fmap ord . unpack
 
-zeroPad :: String -> String
-zeroPad s | null s = "00"
-          | P.length s == 1 = "0" ++ s
-          | otherwise = s
-
 partTwo :: Parsed2 -> String
 partTwo input = let instructions = join . replicate 64 . flip (++) [17, 31, 73, 47, 23] . getParsed $ input
                     jumbled = toList $ runFlips 0 0 instructions (fromList [0..255])
                     chunked = chunksOf 16 jumbled
                     reduced = fmap (\(head:rest) -> foldl' xor head rest) chunked
-                    converted = fmap (zeroPad . (`showHex` "")) reduced
+                    converted = fmap (zeroPad 2 . (`showHex` "")) reduced
                 in foldl' (++) "" converted
 
 main = forkInteract partOne partTwo

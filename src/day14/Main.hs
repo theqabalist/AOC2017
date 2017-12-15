@@ -2,16 +2,15 @@
 module Main where
 
 import Prelude hiding (lookup)
-import Lib (knotHash, Parseable(parse), forkInteract, unwrap)
+import Lib (knotHash, Parseable(parse), forkInteract, unwrap, binWord)
 import Data.Text (unpack, Text, pack, unlines)
 import Data.Bits ((.&.), shift)
-import Numeric (readHex, showIntAtBase)
+import Numeric (readHex)
 import Data.Monoid ((<>))
 import Data.Foldable (foldl')
 import Data.Map (fromList, Map, insert, keys, empty, size, lookup, foldWithKey, toList, (!))
 import Control.Monad (foldM)
 import Control.Monad.State (State, execState, get, put)
-import Debug.Trace (traceShowId)
 
 type Key = String
 instance Parseable Key where
@@ -27,10 +26,6 @@ onesInHash = sum . fmap (countOnes 0 . fst . head . readHex . return) . knotHash
 partOne :: Key -> Int
 partOne = sum . fmap onesInHash . (`fmap` [0..127]) . (\key x -> key ++ "-" ++ show x)
 
-mapBin :: Int -> Char
-mapBin 0 = '0'
-mapBin 1 = '1'
-
 binToFill :: Char -> Labeled
 binToFill '0' = Unlabel Empty
 binToFill '1' = Unlabel Filled
@@ -41,12 +36,8 @@ data Fill = Filled | Empty
 data Labeled = Label Int | Unlabel Fill
     deriving (Show, Eq)
 
-zeroPadNibble :: String -> String
-zeroPadNibble n | length n < 4 = zeroPadNibble ('0':n)
-                | otherwise = n
-
 keyToRow :: Key -> Map Int Labeled
-keyToRow = fromList . zip [0..] . fmap binToFill . foldl' (<>) "" . fmap (zeroPadNibble . (\x -> showIntAtBase 2 mapBin x "") . fst . head . readHex . return) . knotHash
+keyToRow = fromList . zip [0..] . fmap binToFill . foldl' (<>) "" . fmap (binWord 4 . fst . head . readHex . return) . knotHash
 
 rowsToMap :: [Map Int Labeled] -> Map (Int, Int) Labeled
 rowsToMap = foldl' (\m (rowIdx, row) -> foldWithKey (\columnIdx v m2 -> insert (columnIdx, rowIdx) v m2) m row) empty . zip [0..]
@@ -76,7 +67,6 @@ labelAll group coord (Unlabel Filled) m = do
 
 labelWithState :: Map (Int, Int) Labeled -> (Int, Int) -> State Int (Map (Int, Int) Labeled)
 labelWithState m coord = do
-    let x = traceShowId (lookup (93,9) m)
     curGroup <- get
     labelAll curGroup coord (m ! coord) m
 
