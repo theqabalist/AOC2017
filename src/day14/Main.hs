@@ -1,14 +1,16 @@
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}
 module Main where
 
+import Prelude hiding (lookup)
 import Lib (knotHash, Parseable(parse), forkInteract, unwrap)
 import Data.Text (unpack, Text, pack, unlines)
 import Data.Bits ((.&.), shift)
 import Numeric (readHex, showIntAtBase)
 import Data.Monoid ((<>))
 import Data.Foldable (foldl')
-import Data.Map (fromList, Map, insert, empty, foldWithKey, toList)
-import Control.Monad.State (State, evalState, get, put)
+import Data.Map (fromList, Map, insert, keys, empty, size, lookup, foldWithKey, toList, (!))
+import Control.Monad (foldM)
+import Control.Monad.State (State, execState, get, put)
 import Debug.Trace (traceShowId)
 
 type Key = String
@@ -34,35 +36,54 @@ binToFill '0' = Unlabel Empty
 binToFill '1' = Unlabel Filled
 
 data Fill = Filled | Empty
-    deriving (Show)
+    deriving (Show, Eq)
 
 data Labeled = Label Int | Unlabel Fill
-    deriving (Show)
+    deriving (Show, Eq)
+
+zeroPadNibble :: String -> String
+zeroPadNibble n | length n < 4 = zeroPadNibble ('0':n)
+                | otherwise = n
 
 keyToRow :: Key -> Map Int Labeled
-keyToRow = fromList . zip [0..] . fmap binToFill . foldl' (<>) "" . fmap ((\x -> showIntAtBase 2 mapBin x "") . fst . head . readHex . return) . knotHash
+keyToRow = fromList . zip [0..] . fmap binToFill . foldl' (<>) "" . fmap (zeroPadNibble . (\x -> showIntAtBase 2 mapBin x "") . fst . head . readHex . return) . knotHash
 
 rowsToMap :: [Map Int Labeled] -> Map (Int, Int) Labeled
 rowsToMap = foldl' (\m (rowIdx, row) -> foldWithKey (\columnIdx v m2 -> insert (columnIdx, rowIdx) v m2) m row) empty . zip [0..]
 
+ensureKey :: (Show v) => v -> Maybe a -> a
+ensureKey v (Just v2) = v2
+ensureKey v Nothing = error $ "Couldn't find key " ++ show v ++ " in map."
+
+unsafeLookup :: (Show k, Ord k) => k -> Map k a -> a
+unsafeLookup k m = ensureKey k $ lookup k m
+
+neighbors :: (Int, Int) -> Map (Int, Int) Labeled -> [(Int, Int)]
+neighbors (x, y) m = ensureFilled $ ensureBounds [(x - 1, y), (x + 1, y), (x, y - 1), (x, y + 1)]
+    where ensureBounds = filter (\(x, y) -> x >= 0 && y >= 0 && x < 128 && y < 128)
+          ensureFilled = filter (\coord -> unsafeLookup coord m == Unlabel Filled)
+
+fillCoord :: Int -> Map (Int, Int) Labeled -> (Int, Int) -> Map (Int, Int) Labeled
+fillCoord label m coord = foldl' (fillCoord label) (insert coord (Label label) m) (neighbors coord m)
+
 labelAll :: Int -> (Int, Int) -> Labeled -> Map (Int, Int) Labeled -> State Int (Map (Int, Int) Labeled)
-labelAll group coord (Unlabel Empty) map = return $ insert coord (Unlabel Empty) map
-labelAll group coord (Label _) map = return map
-labelAll group coord (Unlabel Filled) map = do
-    let newMap = insert coord (Label (traceShowId group)) map
+labelAll group coord v@(Unlabel Empty) m = return m
+labelAll group coord v@(Label _) m = return m
+labelAll group coord (Unlabel Filled) m = do
+    let newMap = fillCoord group m coord
     put (group + 1)
     return newMap
 
-labelWithState :: (Int, Int) -> Labeled -> State Int (Map (Int, Int) Labeled) -> State Int (Map (Int, Int) Labeled)
-labelWithState coord value ms = do
-    map <- ms
+labelWithState :: Map (Int, Int) Labeled -> (Int, Int) -> State Int (Map (Int, Int) Labeled)
+labelWithState m coord = do
+    let x = traceShowId (lookup (93,9) m)
     curGroup <- get
-    labelAll curGroup coord value map
+    labelAll curGroup coord (m ! coord) m
 
-labelMap :: Map (Int, Int) Labeled -> Map (Int, Int) Labeled
-labelMap = (`evalState` 0) . foldWithKey labelWithState (return empty)
+labelMap :: Map (Int, Int) Labeled -> Int
+labelMap m = (`execState` 0) $ foldM labelWithState m (keys m)
 
-partTwo :: Key -> Map (Int, Int) Labeled
+partTwo :: Key -> Int
 partTwo = labelMap . rowsToMap . fmap keyToRow . (`fmap` [0..127]) . (\key x -> key ++ "-" ++ show x)
 
 main = forkInteract partOne partTwo
