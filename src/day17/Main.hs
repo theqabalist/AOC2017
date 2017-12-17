@@ -18,7 +18,7 @@ solve n i l rots = solve (n + 1) (pos + 1) (firstPart ++ [n] ++ lastPart) rots
 partOne = solve 1 0 [0]
 
 solve2 :: Int -> Int -> Int -> Int -> Int -> Int
-solve2 50000000 i c1 l _ = c1
+solve2 50000001 i c1 l _ = c1
 solve2 n i c1 l rots = solve2 (n + 1) (pos + 1) (if pos == 0 then n else c1) (l + 1) rots
     where pos = (i + rots) `mod` l
 
