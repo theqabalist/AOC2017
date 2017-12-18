@@ -5,10 +5,7 @@ import Lib (Parseable(parse), forkInteract)
 import Day18Parser (parseInput, Instruction(..), runInstruction, defaultVM, VM(..))
 import Data.Maybe (fromJust, fromMaybe)
 import Data.Vector (Vector, (!?), fromList)
-import Debug.Trace (traceShowId)
 import Data.Map (insert)
-import Control.Lens (view, Lens')
-import Control.Lens.Tuple (_1, _2)
 
 instance Parseable (Vector Instruction) where
     parse = fromList . parseInput
@@ -59,4 +56,4 @@ partTwo = runDouble False 0 (defaultVM, setP 1 defaultVM)
 setP :: Int -> VM -> VM
 setP i vm = vm {getRegisters=insert 'p' i (getRegisters vm)}
 
-main = forkInteract partOne partTwo 
+main = forkInteract partOne partTwo
