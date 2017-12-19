@@ -4,6 +4,7 @@ module Lib (
     aperture,
     Parseable(parse),
     forkInteract,
+    forkInteract',
     unwrap,
     knotHash,
     zeroPad,
@@ -42,6 +43,9 @@ instance Parseable Text where
 
 forkInteract :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> d) -> IO ()
 forkInteract f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"]) . strip
+
+forkInteract' :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> d) -> IO ()
+forkInteract' f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"])
 
 unwrap :: Show a => Either a b -> b
 unwrap (Right x) = x
