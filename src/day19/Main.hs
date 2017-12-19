@@ -8,6 +8,7 @@ import Data.Text (unpack)
 import Control.Arrow ((***))
 import Control.Monad.Writer (Writer, tell, writer, execWriter)
 import Data.Char (isAlpha)
+import Data.Monoid (Sum, getSum)
 import Control.Monad ((>=>))
 
 type Coord = (Int, Int)
@@ -37,31 +38,24 @@ packetStart = Packet {position=(63, -1), bearing=(0, 1)}
 halted :: Map Coord Char -> Packet -> Bool
 halted m Packet {position=pos, bearing=bear} = m ! addPoints pos bear == ' '
 
-step :: Map Coord Char -> Packet -> Writer Log Packet
+step :: Map Coord Char -> Packet -> Writer (Sum Int, String) Packet
 step m p = do
     let newPacket = move p
     let c = m ! position newPacket
     let switchPacket = if c == '+' then switch m newPacket else newPacket
-    writer (switchPacket, if isAlpha c then Log (1, [c]) else Log (1, ""))
+    writer (switchPacket, if isAlpha c then (1, [c]) else (1, ""))
 
-travel :: Packet -> Map Coord Char -> Writer Log Packet
+travel :: Packet -> Map Coord Char -> Writer (Sum Int, String) Packet
 travel p m | halted m p = return p
            | otherwise = step m p >>= (`travel` m)
 
-newtype Log = Log (Int, String)
-    deriving (Show)
-
-instance Monoid Log where
-    mempty = Log (0, "")
-    mappend (Log (a1, a2)) (Log (b1, b2)) = Log (a1 + b1, a2 ++ b2)
-
-solution :: Packet -> Map Coord Char -> Log
+solution :: Packet -> Map Coord Char -> (Sum Int, String)
 solution p = execWriter . travel p
 
 partOne :: Map Coord Char -> String
-partOne = (\(Log (_, s)) -> s) . solution packetStart
+partOne = snd . solution packetStart
 
 partTwo :: Map Coord Char -> Int
-partTwo = (\(Log (i, _)) -> i) . solution packetStart
+partTwo = getSum . fst . solution packetStart
 
 main = forkInteract' partOne partTwo
