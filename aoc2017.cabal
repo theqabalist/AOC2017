@@ -24,194 +24,194 @@ library
                        text, vector, split
   default-language:    Haskell2010
 
-executable aoc2017.1
-  hs-source-dirs:      src
-  main-is:             day1/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , split, vector
-                     , aoc2017
-  default-language:    Haskell2010
-
-executable aoc2017.2
-  hs-source-dirs:      src
-  main-is:             day2/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , split, vector
-                     , aoc2017
-  default-language:    Haskell2010
-
-executable aoc2017.3
-  hs-source-dirs:      src
-  main-is:             day3/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , containers, vector, split
-                     , aoc2017
-  default-language:    Haskell2010
-
-executable aoc2017.4
-  hs-source-dirs:      src
-  main-is:             day4/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , containers, vector, split
-                     , aoc2017
-  default-language:    Haskell2010
-
-executable aoc2017.5
-  hs-source-dirs:      src
-  main-is:             day5/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , vector
-                     , aoc2017, split
-                     , primitive
-  default-language:    Haskell2010
-
-executable aoc2017.6
-  hs-source-dirs:      src
-  main-is:             day6/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Lib
-  build-depends:       base
-                     , text
-                     , vector, split
-                     , aoc2017
-                     , containers
-                     , primitive
-  default-language:    Haskell2010
-
-executable aoc2017.7
-  hs-source-dirs:      src src/day7
-  main-is:             day7/Main.hs
-  ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-  other-modules:       Day7Parser
-                     , Lib
-  build-depends:       base
-                     , text
-                     , vector, split
-                     , aoc2017
-                     , mtl
-                     , containers
-                     , primitive
-                     , parsec
-  default-language:    Haskell2010
-
-executable aoc2017.8
-    hs-source-dirs:      src src/day8
-    main-is:             day8/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Day8Parser
-                       , Lib
-    build-depends:       base
-                       , text
-                       , vector, split
-                       , aoc2017
-                       , mtl
-                       , containers
-                       , primitive
-                       , parsec
-    default-language:    Haskell2010
-
-executable aoc2017.9
-    hs-source-dirs:      src src/day9
-    main-is:             day9/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base
-                       , text
-                       , aoc2017, vector, split
-                       , regex-compat
-    default-language:    Haskell2010
-
-executable aoc2017.10
-    hs-source-dirs:      src src/day10
-    main-is:             day10/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base
-                       , text
-                       , vector
-                       , split
-                       , aoc2017
-                       , regex-compat
-    default-language:    Haskell2010
-
-executable aoc2017.11
-    hs-source-dirs:      src src/day11
-    main-is:             day11/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib, Day11Parser
-    build-depends:       base, text, vector, aoc2017, parsec, split
-    default-language:    Haskell2010
-
-executable aoc2017.12
-    hs-source-dirs:      src src/day12
-    main-is:             day12/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base, text, vector, aoc2017, containers, split
-    default-language:    Haskell2010
-
-executable aoc2017.13
-    hs-source-dirs:      src src/day13
-    main-is:             day13/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base, text, vector, aoc2017, containers, split
-    default-language:    Haskell2010
-
-executable aoc2017.14
-    hs-source-dirs:      src src/day14
-    main-is:             day14/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base, text, vector, aoc2017, containers, split, bytestring, hex, mtl
-    default-language:    Haskell2010
-
-executable aoc2017.15
-    hs-source-dirs:      src src/day15
-    main-is:             day15/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base, text, aoc2017, vector, split
-    default-language:    Haskell2010
-
-executable aoc2017.16
-    hs-source-dirs:      src src/day16
-    main-is:             day16/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib, Day16Parser
-    build-depends:       base, text, aoc2017, vector, split, parsec
-    default-language:    Haskell2010
-
-executable aoc2017.17
-    hs-source-dirs:      src src/day17
-    main-is:             day17/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib
-    build-depends:       base, text, aoc2017, vector, split, parsec
-    default-language:    Haskell2010
-
-executable aoc2017.18
-    hs-source-dirs:      src src/day18
-    main-is:             day18/Main.hs
-    ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
-    other-modules:       Lib, Day18Parser
-    build-depends:       base, text, aoc2017, vector, split, parsec, containers, lens
-    default-language:    Haskell2010
+-- executable aoc2017.1
+--   hs-source-dirs:      src
+--   main-is:             day1/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , split, vector
+--                      , aoc2017
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.2
+--   hs-source-dirs:      src
+--   main-is:             day2/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , split, vector
+--                      , aoc2017
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.3
+--   hs-source-dirs:      src
+--   main-is:             day3/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , containers, vector, split
+--                      , aoc2017
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.4
+--   hs-source-dirs:      src
+--   main-is:             day4/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , containers, vector, split
+--                      , aoc2017
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.5
+--   hs-source-dirs:      src
+--   main-is:             day5/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , vector
+--                      , aoc2017, split
+--                      , primitive
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.6
+--   hs-source-dirs:      src
+--   main-is:             day6/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Lib
+--   build-depends:       base
+--                      , text
+--                      , vector, split
+--                      , aoc2017
+--                      , containers
+--                      , primitive
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.7
+--   hs-source-dirs:      src src/day7
+--   main-is:             day7/Main.hs
+--   ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--   other-modules:       Day7Parser
+--                      , Lib
+--   build-depends:       base
+--                      , text
+--                      , vector, split
+--                      , aoc2017
+--                      , mtl
+--                      , containers
+--                      , primitive
+--                      , parsec
+--   default-language:    Haskell2010
+--
+-- executable aoc2017.8
+--     hs-source-dirs:      src src/day8
+--     main-is:             day8/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Day8Parser
+--                        , Lib
+--     build-depends:       base
+--                        , text
+--                        , vector, split
+--                        , aoc2017
+--                        , mtl
+--                        , containers
+--                        , primitive
+--                        , parsec
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.9
+--     hs-source-dirs:      src src/day9
+--     main-is:             day9/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base
+--                        , text
+--                        , aoc2017, vector, split
+--                        , regex-compat
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.10
+--     hs-source-dirs:      src src/day10
+--     main-is:             day10/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base
+--                        , text
+--                        , vector
+--                        , split
+--                        , aoc2017
+--                        , regex-compat
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.11
+--     hs-source-dirs:      src src/day11
+--     main-is:             day11/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib, Day11Parser
+--     build-depends:       base, text, vector, aoc2017, parsec, split
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.12
+--     hs-source-dirs:      src src/day12
+--     main-is:             day12/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base, text, vector, aoc2017, containers, split
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.13
+--     hs-source-dirs:      src src/day13
+--     main-is:             day13/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base, text, vector, aoc2017, containers, split
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.14
+--     hs-source-dirs:      src src/day14
+--     main-is:             day14/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base, text, vector, aoc2017, containers, split, bytestring, hex, mtl
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.15
+--     hs-source-dirs:      src src/day15
+--     main-is:             day15/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base, text, aoc2017, vector, split
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.16
+--     hs-source-dirs:      src src/day16
+--     main-is:             day16/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib, Day16Parser
+--     build-depends:       base, text, aoc2017, vector, split, parsec
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.17
+--     hs-source-dirs:      src src/day17
+--     main-is:             day17/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib
+--     build-depends:       base, text, aoc2017, vector, split, parsec
+--     default-language:    Haskell2010
+--
+-- executable aoc2017.18
+--     hs-source-dirs:      src src/day18
+--     main-is:             day18/Main.hs
+--     ghc-options:         -O2 -threaded -rtsopts -funbox-strict-fields
+--     other-modules:       Lib, Day18Parser
+--     build-depends:       base, text, aoc2017, vector, split, parsec, containers, lens
+--     default-language:    Haskell2010
 
 executable aoc2017.19
     hs-source-dirs:      src src/day19
