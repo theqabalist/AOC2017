@@ -11,6 +11,7 @@ import Data.List.Split (chunksOf)
 import Data.List (foldl')
 import Debug.Trace (traceShowId)
 import Data.Foldable (sum)
+import Control.Parallel.Strategies (parMap, rpar, dot, rdeepseq)
 
 type KB = (Map (Matrix Int) (Matrix Int))
 
@@ -40,8 +41,9 @@ expand1 kb m = if nrows m `mod` 2 == 0
 
 expandN' :: Int -> Int -> KB -> Matrix Int -> Int
 expandN' depth 0 kb m = sum m
-expandN' depth n kb m | (depth - n) `mod` 3 == 0 = sum (expandN' depth (n - 1) kb . expand1 kb <$> subMatrixList 3 m)
+expandN' depth n kb m | (depth - n) `mod` 3 == 0 = sum (parallelize (expandN' depth (n - 1) kb . expand1 kb) $ subMatrixList 3 m)
                       | otherwise = expandN' depth (n - 1) kb (expand1 kb m)
+    where parallelize = if depth - n < 6 then parMap rpar else fmap
 
 expandN depth = expandN' depth depth
 
