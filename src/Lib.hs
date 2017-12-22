@@ -5,6 +5,8 @@ module Lib (
     Parseable(parse),
     forkInteract,
     forkInteract',
+    dualTextAdapter,
+    dualTextAdapter',
     unwrap,
     knotHash,
     zeroPad,
@@ -45,7 +47,13 @@ forkInteract :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> 
 forkInteract f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"]) . strip
 
 forkInteract' :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> d) -> IO ()
-forkInteract' f1 f2 = interact $ (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"])
+forkInteract' f1 f2 = interact (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"])
+
+dualTextAdapter :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> d) -> Text -> Text
+dualTextAdapter f1 f2 = (\input -> concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"]) . strip
+
+dualTextAdapter' :: (Parseable a, Show b, Parseable c, Show d) => (a -> b) -> (c -> d) -> Text -> Text
+dualTextAdapter' f1 f2 input = concat ["part 1: ", pack . show $ f1 $ parse input, "\n\npart 2: ", pack . show $ f2 $ parse input, "\n"]
 
 unwrap :: Show a => Either a b -> b
 unwrap (Right x) = x
@@ -65,7 +73,7 @@ runFlips position skips ls v | null ls = v
                                          in runFlips ((position + skips + len) `mod` length v) (skips + 1) (tail ls) (pancakeFlip position len v)
 
 zeroPad :: Int -> String -> String
-zeroPad n s | P.length s < n = '0':s
+zeroPad n s | P.length s < n = zeroPad n ('0':s)
             | otherwise = s
 
 mapBin :: Int -> Char

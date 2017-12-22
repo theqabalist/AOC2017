@@ -1,0 +1,32 @@
+name: aoc2017
+version: '0.1.0.0'
+synopsis: Short description of your package
+description: Please see the README on Github at <https://github.com/githubuser/aoc2017#readme>
+category: Web
+author: Author name here
+maintainer: example@example.com
+copyright: 2017 Author name here
+license: BSD3
+github: githubuser/aoc2017
+extra-source-files:
+- README.md
+dependencies:
+- text
+- vector
+- split
+- base
+- parsec
+- containers
+- mtl
+- primitive
+- regex-compat
+- matrix
+- parallel
+executables:
+  aoc2017:
+    main: Main.hs
+    source-dirs: src
+    ghc-options:
+    - -O2
+    - -threaded
+    - -funbox-strict-fields

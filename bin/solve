@@ -1,3 +1,0 @@
-#!/bin/bash -e
-stack build
-stack exec aoc2017.$1 -- +RTS -N8 < src/day$1/input.txt
