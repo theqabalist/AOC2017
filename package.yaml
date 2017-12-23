@@ -30,3 +30,6 @@ executables:
     - -O2
     - -threaded
     - -funbox-strict-fields
+    # - -static
+    # - -optc-static
+    # - -optl-static
