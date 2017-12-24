@@ -26,6 +26,7 @@ import qualified Days.Day20 as D20
 import qualified Days.Day21 as D21
 import qualified Days.Day22 as D22
 import qualified Days.Day23 as D23
+import qualified Days.Day24 as D24
 import Data.Text (Text)
 
 days :: [Text -> Text]
@@ -52,5 +53,6 @@ days = [
     dualTextAdapter D20.partOne D20.partTwo,
     dualTextAdapter D21.partOne D21.partTwo,
     dualTextAdapter D22.partOne D22.partTwo,
-    dualTextAdapter D23.partOne D23.partTwo
+    dualTextAdapter D23.partOne D23.partTwo,
+    dualTextAdapter D24.partOne D24.partTwo
  ]
